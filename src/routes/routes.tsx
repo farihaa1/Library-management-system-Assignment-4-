@@ -1,11 +1,18 @@
 
+import App from "@/App";
+import HomePage from "@/pages/home";
 import { createBrowserRouter } from "react-router";
-
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello World</div>,
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+    ],
   },
 ]);
 
