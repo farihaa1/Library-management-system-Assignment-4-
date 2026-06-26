@@ -1,7 +1,8 @@
 
-import { MainLayout } from "@/App";
+import { MainLayout } from "@/MainLayout";
 import { AllBooks } from "@/pages/allBooks";
-import { BorrowSummery } from "@/pages/borrowSummery";
+import BorrowSummary from "@/pages/borrowSummery";
+
 import HomePage from "@/pages/home";
 import { createBrowserRouter } from "react-router";
 
@@ -20,7 +21,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/borrow-summary",
-        element: <BorrowSummery />,
+        element: <BorrowSummary />,
       },
     ],
   },
