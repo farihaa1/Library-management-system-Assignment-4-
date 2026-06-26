@@ -1,4 +1,6 @@
+import { useGetBooksQuery } from "@/redux/API/booksApi";
 import BookCard from "./booksCard";
+import type { IBook } from "@/type";
 
 const books = [
   {
@@ -33,19 +35,19 @@ const books = [
 ];
 
 export default function FeaturedBooks() {
+  const { data, isLoading, isError } = useGetBooksQuery(undefined);
+
+  console.log(isError, isLoading);
+
   return (
     <section className="container mx-auto py-12">
       <div className="mb-8">
         <h2 className="text-3xl font-bold">Popular Books</h2>
-
         <p className="text-muted-foreground">Explore our collection</p>
       </div>
 
-      <div
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3
-"
-      >
-        {books.map((book) => (
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {data?.data.map((book: IBook) => (
           <BookCard key={book._id} book={book} />
         ))}
       </div>

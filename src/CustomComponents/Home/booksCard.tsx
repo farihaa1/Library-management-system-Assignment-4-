@@ -21,29 +21,15 @@ export default function BookCard({ book }: BookCardProps) {
   return (
     <Card>
       <CardContent className="space-y-4 p-5">
-        <div
-          className="
-h-40
-rounded-lg
-bg-muted
-flex
-items-center
-justify-center
-text-4xl
-"
-        >
+        <div className="h-40 rounded-lg bg-muted flex items-center justify-center text-4xl">
           📚
         </div>
 
         <Badge>{book.genre}</Badge>
-
         <h3 className="text-xl font-semibold">{book.title}</h3>
-
         <p className="text-muted-foreground">{book.author}</p>
-
         <div className="flex justify-between">
           <span>Copies: {book.copies}</span>
-
           <Badge variant={book.available ? "default" : "destructive"}>
             {book.available ? "Available" : "Unavailable"}
           </Badge>
@@ -54,7 +40,6 @@ text-4xl
         <Button asChild className="flex-1">
           <Link to={`/books/${book._id}`}>View</Link>
         </Button>
-
         <Button
           asChild
           variant="outline"

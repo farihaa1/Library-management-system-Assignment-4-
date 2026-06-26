@@ -1,4 +1,4 @@
-
+import BookDetails from "@/CustomComponents/bookDetails";
 import { MainLayout } from "@/MainLayout";
 import { AllBooks } from "@/pages/allBooks";
 import BorrowSummary from "@/pages/borrowSummery";
@@ -23,7 +23,11 @@ export const routes = createBrowserRouter([
         path: "/borrow-summary",
         element: <BorrowSummary />,
       },
+
+      {
+        path: "/books/:id",
+        element: <BookDetails />,
+      },
     ],
   },
 ]);
-
