@@ -6,10 +6,10 @@ import { useGetBooksByIdQuery } from "@/redux/API/booksApi";
 import { BookOpen, BookText, Hash, Layers3, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
+import { BorrowBook } from "./BorrowBook/borrowBook";
 
 export default function BookDetails() {
   const { id } = useParams();
-  const [open, setOpen] = useState(false);
 
   const { data, isLoading, isError } = useGetBooksByIdQuery(id);
   console.log(data);
@@ -96,7 +96,9 @@ export default function BookDetails() {
             </div>
 
             <div className="flex flex-wrap gap-3 pt-4">
-              <Button>Borrow Book</Button>
+              <div className="">
+                <BorrowBook bookId={book._id} />
+              </div>
 
               <Button
                 variant="outline"

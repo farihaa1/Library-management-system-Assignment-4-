@@ -6,28 +6,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-interface BorrowBook {
-  _id: string;
-  title: string;
-  isbn: string;
-  totalQuantity: number;
-}
-
-interface BorrowTableProps {
-  books: BorrowBook[];
-}
+import { useGetBorrowBooksQuery } from "@/redux/API/borrowApi";
+import type { BorrowTableProps, IBorrowBook } from "@/type";
 
 export default function BorrowTable({ books }: BorrowTableProps) {
+  const { data, isLoading, isError } = useGetBorrowBooksQuery(undefined);
+  console.log(data)
   return (
     <div className="rounded-xl border overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Book Title</TableHead>
-
             <TableHead>ISBN</TableHead>
-
             <TableHead className="text-center">
               Total Quantity Borrowed
             </TableHead>
@@ -35,13 +26,13 @@ export default function BorrowTable({ books }: BorrowTableProps) {
         </TableHeader>
 
         <TableBody>
-          {books.map((book) => (
-            <TableRow key={book._id}>
-              <TableCell className="font-medium">{book.title}</TableCell>
+          {data?.data?.map((borrowBook:IBorrowBook) => (
+            <TableRow key={borrowBook?.book.isbn}>
+              <TableCell className="font-medium">{borrowBook?.book?.title}</TableCell>
 
-              <TableCell className="font-mono text-sm">{book.isbn}</TableCell>
+              <TableCell className="font-mono text-sm">{borrowBook.book?.isbn}</TableCell>
               <TableCell className="text-center">
-                {book.totalQuantity}
+                {borrowBook.totalQuantity}
               </TableCell>
             </TableRow>
           ))}

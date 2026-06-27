@@ -1,10 +1,19 @@
 import { ArrowRight, BookOpen, LibraryBig } from "lucide-react";
-
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import { useGetBorrowBooksQuery } from "@/redux/API/borrowApi";
+import { useGetBooksQuery } from "@/redux/API/booksApi";
+import type { IBook } from "@/type";
 
 const HeroSection = () => {
+  const { data } = useGetBorrowBooksQuery(undefined);
+  const { data: books } = useGetBooksQuery(undefined);
+
+  const borrowedBook = data?.data?.[0];
+  const book = books?.data?.[3];
+  const unavailableBooks = books?.data?.filter((book:IBook) => !book.available);
+  console.log(borrowedBook, unavailableBooks);
+
   return (
     <section className="relative overflow-hidden">
       <div className="container mx-auto px-4 py-24 lg:py-32">
@@ -25,8 +34,8 @@ const HeroSection = () => {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-              Manage books, monitor availability, borrow titles, and keep
-              your entire library organized with a fast, modern, and intuitive
+              Manage books, monitor availability, borrow titles, and keep your
+              entire library organized with a fast, modern, and intuitive
               platform.
             </p>
 
@@ -39,32 +48,24 @@ const HeroSection = () => {
               </Button>
 
               <Button variant="outline" size="lg" asChild>
-                <Link to="/create-book">
-                  Add New Book
-                </Link>
+                <Link to="/create-book">Add New Book</Link>
               </Button>
             </div>
 
             <div className="mt-12 flex gap-10">
               <div>
                 <h3 className="text-3xl font-bold">10K+</h3>
-                <p className="text-muted-foreground">
-                  Books Managed
-                </p>
+                <p className="text-muted-foreground">Books Managed</p>
               </div>
 
               <div>
                 <h3 className="text-3xl font-bold">5K+</h3>
-                <p className="text-muted-foreground">
-                  Active Borrowers
-                </p>
+                <p className="text-muted-foreground">Active Borrowers</p>
               </div>
 
               <div>
                 <h3 className="text-3xl font-bold">99%</h3>
-                <p className="text-muted-foreground">
-                  Availability Tracking
-                </p>
+                <p className="text-muted-foreground">Availability Tracking</p>
               </div>
             </div>
           </div>
@@ -76,38 +77,39 @@ const HeroSection = () => {
                 <div className="flex items-center justify-between rounded-xl border p-4">
                   <div>
                     <h3 className="font-semibold">
-                      Clean Code
+                      {unavailableBooks?.title || "Steve Jobs"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      Robert C. Martin
+                      {unavailableBooks?.author || "James Clear"}
                     </p>
                   </div>
-
-                  <BookOpen className="h-8 w-8 text-primary" />
-                </div>
-
-                <div className="flex items-center justify-between rounded-xl border p-4">
-                  <div>
-                    <h3 className="font-semibold">
-                      Atomic Habits
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      James Clear
-                    </p>
-                  </div>
-
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
-                    Available
+                  <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm text-yellow-700">
+                    {unavailableBooks?.available ? "Available" : "Unavailable"}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between rounded-xl border p-4">
                   <div>
                     <h3 className="font-semibold">
-                      The Hobbit
+                      {book?.title || "Steve Jobs"}
                     </h3>
                     <p className="text-sm text-muted-foreground">
-                      J.R.R. Tolkien
+                      {book?.author || "James Clear"}
+                    </p>
+                  </div>
+
+                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm text-green-700">
+                    {book?.available ? "Available" : "Unavailable"}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between rounded-xl border p-4">
+                  <div>
+                    <h3 className="font-semibold">
+                      {borrowedBook?.book?.title || "Atomic Habits"}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {borrowedBook?.book?.isbn || ""}
                     </p>
                   </div>
 
